@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 210" role="img" aria-label="Calcetín turquesa con robot">
+  <title>Calcetín turquesa con robot</title>
+  <defs><clipPath id="s"><path d="M68 18 L122 18 L122 108 Q122 120 136 128 L172 148 Q192 160 184 178 Q176 192 156 192 L88 192 Q64 192 64 168 Z"/></clipPath></defs>
+  <ellipse cx="118" cy="199" rx="82" ry="7" fill="#000" opacity=".12"/>
+  <path d="M68 18 L122 18 L122 108 Q122 120 136 128 L172 148 Q192 160 184 178 Q176 192 156 192 L88 192 Q64 192 64 168 Z" fill="#3fb8c8"/>
+  <g clip-path="url(#s)">
+    <rect x="50" y="18" width="90" height="26" fill="#1a1a2e"/>
+    <path d="M50 26H140M50 34H140" stroke="#3fb8c8" stroke-width="3" opacity=".55"/>
+    <path d="M50 150Q64 130 84 150V200H50Z" fill="#1a1a2e"/>
+    <path d="M160 120L200 120L200 200L150 200Z" fill="#1a1a2e"/>
+    <g transform="translate(93 78)"><path d="M0 -26V-16" stroke="#1a1a2e" stroke-width="3"/><circle cx="0" cy="-28" r="4" fill="#ffc933" stroke="#1a1a2e" stroke-width="2"/><rect x="-22" y="-16" width="44" height="38" rx="8" fill="#fff" stroke="#1a1a2e" stroke-width="2.5"/><circle cx="-9" cy="-2" r="6" fill="#1c3faa"/><circle cx="9" cy="-2" r="6" fill="#1c3faa"/><path d="M-10 12H10" stroke="#1a1a2e" stroke-width="3" stroke-linecap="round"/></g>
+  </g>
+  <path d="M68 18 L122 18 L122 108 Q122 120 136 128 L172 148 Q192 160 184 178 Q176 192 156 192 L88 192 Q64 192 64 168 Z" fill="none" stroke="#1a1a2e" stroke-width="4" stroke-linejoin="round"/>
+</svg>

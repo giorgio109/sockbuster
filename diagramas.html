@@ -1,0 +1,55 @@
+<!DOCTYPE html><html lang="es"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bowlby+One&family=Work+Sans:wght@400;600;700&display=swap"><link rel="stylesheet" href="estilos.css"><title>Paradigma 4+1 · Sockbuster</title></head><body>
+<header class="nav"><a class="marca" href="index.html">Sockbuster</a><nav aria-label="Principal"><a href="index.html">Inicio</a><a href="catalogo.html">Catálogo</a><a href="diagramas.html" aria-current="page">Paradigma 4+1</a></nav></header>
+<main>
+<h1 style="color:var(--azul)">Paradigma 4+1</h1>
+<p>La arquitectura de Sockbuster se documenta con el paradigma 4+1 de vistas: cuatro vistas (Lógica, Desarrollo, Procesos y Física) validadas por la vista de Escenarios. Todos los diagramas fueron elaborados en PlantUML y usan los mismos nombres de clases, componentes y nodos.</p>
+<p><strong>Alcance:</strong> el modelo representa la arquitectura completa que exige el caso (servicios, base de datos, HTTPS y JWT). El prototipo web implementa la interfaz (HTML, CSS y JS) con datos simulados en el navegador: catálogo con filtros (RF01), carrito y checkout (RF02), panel de administración (RF03) y reseñas con estrellas (RF04) tras un ingreso simulado con token de ejemplo (RNF02). Lo que en el diagrama es servidor, base de datos y JWT real, en el prototipo se reemplaza por JavaScript en el navegador; se despliega como sitio estático.</p>
+
+<section class="vista" id="logica"><h2>1. Vista Lógica</h2>
+<p>Muestra la estructura del dominio mediante un diagrama de clases. <span class="rf">RF01</span> <span class="rf">RF02</span> <span class="rf">RF03</span> <span class="rf">RF04</span></p>
+<img src="img/vista-logica.png" alt="Diagrama de clases de Sockbuster">
+<p><code>Usuario</code> se especializa en <code>Cliente</code> y <code>Administrador</code>. Un <code>Cliente</code> posee un <code>Carrito</code> (con sus <code>ItemCarrito</code>), realiza <code>Pedido</code>s (con sus <code>ItemPedido</code>) y escribe <code>Resena</code>s sobre un <code>Calcetin</code>. Las <code>Coleccion</code>es agrupan calcetines (RF01) y el <code>Administrador</code> gestiona stock y precios (RF03). Los atributos, métodos y multiplicidades están indicados en el diagrama.</p></section>
+
+<section class="vista" id="desarrollo"><h2>2. Vista de Desarrollo</h2>
+<p>Organiza el software en componentes mediante un diagrama de componentes. <span class="rf">RNF02</span></p>
+<img src="img/vista-desarrollo.png" alt="Diagrama de componentes de Sockbuster">
+<p>El <strong>Frontend Web</strong> está formado por <code>index.html</code>, <code>catalogo.html</code>, <code>diagramas.html</code>, <code>estilos.css</code> y <code>scripts.js</code>. Este último se comunica por HTTPS con los módulos de Catálogo (RF01), Pedidos (RF02), Inventario (RF03) y Reseñas (RF04). Los módulos de Inventario y Reseñas usan el Módulo de Autenticación JWT (RNF02). Todos los módulos acceden a la Base de Datos.</p></section>
+
+<section class="vista" id="procesos"><h2>3. Vista de Procesos</h2>
+<p>Describe el comportamiento dinámico de los procesos clave mediante diagramas de secuencia.</p>
+<h3 style="font-size:1.1rem">3.1 Checkout <span class="rf">RF02</span></h3>
+<img src="img/proceso-checkout.png" alt="Diagrama de secuencia del checkout">
+<p>El cliente finaliza la compra, el servidor simula la verificación de pago y abre una transacción sobre la base de datos para comprobar el stock. Si hay stock suficiente, descuenta las unidades, crea el pedido con un ID único y devuelve el resumen. Si no, revierte la transacción e informa el error. Con esto se sincroniza el acceso al stock: si dos clientes compran la última unidad al mismo tiempo, la transacción atiende a uno y revierte al otro, evitando vender más de lo disponible.</p>
+<h3 style="font-size:1.1rem">3.2 Filtrado del catálogo <span class="rf">RF01</span></h3>
+<img src="img/proceso-filtrado.png" alt="Diagrama de secuencia del filtrado de catálogo">
+<p>Al elegir una colección, el frontend solicita al servidor los calcetines de esa colección, que consulta la base de datos y devuelve foto, precio, stock y tallas para mostrarlos al cliente.</p></section>
+
+<section class="vista" id="fisica"><h2>4. Vista Física</h2>
+<p>Muestra la topología de despliegue mediante un diagrama de despliegue. <span class="rf">RNF01</span> <span class="rf">RNF02</span></p>
+<img src="img/vista-fisica.png" alt="Diagrama de despliegue de Sockbuster">
+<p>El navegador del usuario accede por HTTPS al contenido estático servido desde una CDN (carga inicial en menos de 2 segundos, RNF01). El sitio se publica como contenido estático en un hosting web gratuito (por ejemplo GitHub Pages). En el modelo completo, el hosting en la nube aloja el Servidor Web (frontend y servicios del sistema) y el Servidor de Base de Datos. Las funciones administrativas viajan por HTTPS con token JWT (RNF02).</p></section>
+
+<section class="vista" id="escenarios"><h2>5. Escenarios (quinta vista)</h2>
+<p>Los casos de uso validan y unen las cuatro vistas anteriores.</p>
+<img src="img/escenarios.png" alt="Diagrama de casos de uso de Sockbuster">
+<p>El actor "Cliente registrado" corresponde a la clase <code>Cliente</code> de la vista lógica. La siguiente tabla relaciona cada caso de uso con los elementos de las demás vistas.</p>
+<div class="tabla"><table>
+<thead><tr><th>Caso de uso</th><th>Req.</th><th>Vista Lógica</th><th>Vista de Desarrollo</th><th>Vista de Procesos</th><th>Vista Física</th></tr></thead>
+<tbody>
+<tr><td>Explorar y filtrar catálogo</td><td>RF01</td><td>Coleccion, Calcetin</td><td>Módulo Catálogo</td><td>Filtrado del catálogo</td><td>CDN, Servidor Web</td></tr>
+<tr><td>Gestionar carrito</td><td>RF02</td><td>Carrito, ItemCarrito</td><td>Módulo Pedidos, scripts.js</td><td>Checkout (paso previo)</td><td>Servidor Web</td></tr>
+<tr><td>Realizar checkout</td><td>RF02</td><td>Pedido, ItemPedido</td><td>Módulo Pedidos</td><td>Checkout</td><td>Servidor Web, Servidor de BD</td></tr>
+<tr><td>Administrar inventario y temáticas</td><td>RF03</td><td>Administrador, Calcetin</td><td>Módulo Inventario, Módulo Autenticación JWT</td><td>Autenticación previa (include)</td><td>Servidor Web (HTTPS + JWT)</td></tr>
+<tr><td>Publicar reseña</td><td>RF04</td><td>Resena, Cliente</td><td>Módulo Reseñas, Módulo Autenticación JWT</td><td>Autenticación previa (include)</td><td>Servidor Web, Servidor de BD</td></tr>
+<tr><td>Autenticarse con JWT</td><td>RNF02</td><td>Usuario</td><td>Módulo Autenticación JWT</td><td>Incluido en RF03 y RF04</td><td>HTTPS + token JWT</td></tr>
+</tbody></table></div>
+<h3 style="font-size:1.1rem">Historias de usuario</h3>
+<ul>
+<li><strong>HU1 (RF01):</strong> Como cliente quiero filtrar por colección para encontrar rápido calcetines de mi película favorita. Valida: <code>Coleccion</code>, Módulo Catálogo, secuencia de filtrado, CDN.</li>
+<li><strong>HU2 (RF02):</strong> Como cliente quiero finalizar mi compra y recibir un ID de pedido para confirmar mi orden. Valida: <code>Pedido</code>, Módulo Pedidos, secuencia de checkout, Servidor de BD.</li>
+<li><strong>HU3 (RF03, RNF02):</strong> Como administrador quiero actualizar stock y precios con sesión autenticada para mantener el inventario al día. Valida: <code>Administrador</code>, Módulo Inventario + JWT, HTTPS.</li>
+<li><strong>HU4 (RF04):</strong> Como cliente registrado quiero publicar una reseña de 1 a 5 estrellas para compartir mi opinión. Valida: <code>Resena</code>, Módulo Reseñas, Vista Física.</li>
+</ul></section>
+</main>
+<footer>Sockbuster Video &amp; Socks · Modelamiento de soluciones informáticas (TI3025) · Evaluación 3<br><strong>Desarrollado por:</strong> Jorge Leal, Franco Carimoney y Gustavo Pavez</footer>
+</body></html>

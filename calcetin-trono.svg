@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 210" role="img" aria-label="Calcetín dorado con corona">
+  <title>Calcetín dorado con corona</title>
+  <defs><clipPath id="s"><path d="M68 18 L122 18 L122 108 Q122 120 136 128 L172 148 Q192 160 184 178 Q176 192 156 192 L88 192 Q64 192 64 168 Z"/></clipPath></defs>
+  <ellipse cx="118" cy="199" rx="82" ry="7" fill="#000" opacity=".12"/>
+  <path d="M68 18 L122 18 L122 108 Q122 120 136 128 L172 148 Q192 160 184 178 Q176 192 156 192 L88 192 Q64 192 64 168 Z" fill="#d9b84a"/>
+  <g clip-path="url(#s)">
+    <rect x="50" y="18" width="90" height="26" fill="#1c3faa"/>
+    <path d="M50 26H140M50 34H140" stroke="#d9b84a" stroke-width="3" opacity=".55"/>
+    <path d="M50 150Q64 130 84 150V200H50Z" fill="#1c3faa"/>
+    <path d="M160 120L200 120L200 200L150 200Z" fill="#1c3faa"/>
+    <g transform="translate(93 78)"><path d="M-24 18L-24 -14L-12 0L0 -22L12 0L24 -14L24 18Z" fill="#ffc933" stroke="#1a1a2e" stroke-width="2.5" stroke-linejoin="round"/><circle cx="-24" cy="-14" r="3.5" fill="#fff"/><circle cx="0" cy="-22" r="3.5" fill="#fff"/><circle cx="24" cy="-14" r="3.5" fill="#fff"/></g>
+  </g>
+  <path d="M68 18 L122 18 L122 108 Q122 120 136 128 L172 148 Q192 160 184 178 Q176 192 156 192 L88 192 Q64 192 64 168 Z" fill="none" stroke="#1a1a2e" stroke-width="4" stroke-linejoin="round"/>
+</svg>
